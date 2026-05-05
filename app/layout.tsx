@@ -16,11 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Script
-        defer
-        src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon='{"token": "7fe05f9c54ea42a3b7ecb3c63d2ba760"}'
-      />
+      {process.env.NODE_ENV === "production" && (
+        <Script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "7fe05f9c54ea42a3b7ecb3c63d2ba760"}'
+        />
+      )}
       <body>
         {children}
         <Toaster
