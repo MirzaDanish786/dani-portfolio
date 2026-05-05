@@ -2,9 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-const POINTER_SELECTOR =
-  'a, button, [role="button"], [role="link"], [role="menuitem"], input[type="button"], input[type="submit"], input[type="checkbox"], input[type="radio"], select, label, summary, [data-cursor="pointer"], .cursor-pointer';
-
 export function MouseFollower() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -14,29 +11,16 @@ export function MouseFollower() {
     const img = imgRef.current;
     if (!wrapper || !img) return;
 
-    let isPointer = false;
     let isPressed = false;
 
     const applyVisual = () => {
-      const offsetX = isPointer ? -9 : -2;
-      const offsetY = -2;
       const scale = isPressed ? 0.88 : 1;
-      img.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
-      img.style.width = isPointer ? "26px" : "24px";
-      img.src = isPointer ? "/cursor-pointer.png" : "/normal-cursor.png";
+      img.style.transform = `translate(-2px, -2px) scale(${scale})`;
     };
-
-    applyVisual();
 
     const handleMouseMove = (e: MouseEvent) => {
       wrapper.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       wrapper.style.opacity = "1";
-      const target = e.target as HTMLElement | null;
-      const next = Boolean(target?.closest(POINTER_SELECTOR));
-      if (next !== isPointer) {
-        isPointer = next;
-        applyVisual();
-      }
     };
 
     const handleMouseLeave = () => {
