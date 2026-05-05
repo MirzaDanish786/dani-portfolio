@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Mirza Danish  - Full Stack Engineer",
@@ -15,6 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "7fe05f9c54ea42a3b7ecb3c63d2ba760"}'
+      />
       <body>
         {children}
         <Toaster
