@@ -58,7 +58,7 @@ const certificates: Certificate[] = [
     description:
       "Completed Google’s “Data, Data Everywhere” course on Coursera, gaining hands-on experience in data cleaning, analysis, and working with Python and Pandas.",
     skills: ["Python", "Pandas", "Data", "SQL"],
-    image: "/Google Data Analytics Certificate.png",
+    image: "/google-data-analytics-certificate.png",
     credentialUrl: "https://www.coursera.org/account/accomplishments/verify/3PZXA03IAP6Y",
   },
 ];
