@@ -586,6 +586,7 @@ export default function Portfolio() {
                 <SkillBadge name="NestJS" level={70} />
                 <SkillBadge name="Express.js" level={95} />
                 <SkillBadge name="NestJS" level={90} />
+                <SkillBadge name="NGINX" level={60} />
                 <SkillBadge name="Tenstack-Router" level={80} />
                 <SkillBadge name="Tenstack-Query" level={85} />
                 <SkillBadge name="Prisma" level={80} />
