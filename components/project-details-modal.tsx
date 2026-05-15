@@ -46,7 +46,9 @@ export interface ProjectDetails {
 }
 
 interface ProjectDetailsModalProps {
-  trigger: React.ReactNode;
+  trigger?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   title: string;
   description: string;
   tags: string[];
@@ -64,6 +66,8 @@ function asParagraphs(value: string | string[]) {
 
 export function ProjectDetailsModal({
   trigger,
+  open,
+  onOpenChange,
   title,
   description,
   tags,
@@ -95,8 +99,8 @@ export function ProjectDetailsModal({
     metaItems.push({ Icon: Activity, label: "Status", value: status });
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent className="max-w-4xl w-[95vw] max-h-[70vh] sm:max-h-[85vh] overflow-y-auto bg-zinc-950/95 backdrop-blur-xl border-zinc-800 p-0 custom-scrollbar-phthalo [&>button]:hidden">
         {/* Glassy Close button — top right */}
         <DialogClose asChild>

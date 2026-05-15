@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Github, Ban, Eye, Lock, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
@@ -43,6 +43,28 @@ export function ProjectCard({
   details,
 }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const justClosedRef = useRef(false);
+
+  const canOpenDetails = Boolean(details);
+
+  const openDetails = () => {
+    if (canOpenDetails && !modalOpen && !justClosedRef.current) {
+      setModalOpen(true);
+    }
+  };
+
+  const handleOpenChange = (next: boolean) => {
+    setModalOpen(next);
+    if (!next) {
+      justClosedRef.current = true;
+      window.setTimeout(() => {
+        justClosedRef.current = false;
+      }, 250);
+    }
+  };
+
+  const stopPropagation = (e: React.SyntheticEvent) => e.stopPropagation();
 
   return (
     <motion.div
@@ -53,9 +75,21 @@ export function ProjectCard({
       className="group"
     >
       <div
-        className="relative h-full overflow-hidden rounded-xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 transition-all duration-300 group-hover:border-phthalo-500/50"
+        className={`relative h-full overflow-hidden rounded-xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 transition-all duration-300 group-hover:border-phthalo-500/50 ${
+          canOpenDetails ? "cursor-pointer" : ""
+        }`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onClick={openDetails}
+        onKeyDown={(e) => {
+          if (canOpenDetails && (e.key === "Enter" || e.key === " ")) {
+            e.preventDefault();
+            openDetails();
+          }
+        }}
+        role={canOpenDetails ? "button" : undefined}
+        tabIndex={canOpenDetails ? 0 : undefined}
+        aria-label={canOpenDetails ? `Open case study for ${title}` : undefined}
       >
         <div className="absolute -inset-1 bg-gradient-to-r from-phthalo-500/10 to-phthalo-700/10 rounded-xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
 
@@ -129,32 +163,41 @@ export function ProjectCard({
               </div>
               <div>
                 {details && (
-                  <ProjectDetailsModal
-                    title={title}
-                    description={description}
-                    tags={tags}
-                    image={image}
-                    demoUrl={demoUrl}
-                    repoUrl={repoUrl}
-                    isConfidential={isConfidential}
-                    confidentialNote={confidentialNote}
-                    details={details}
-                    trigger={
-                      <button
-                        type="button"
-                        className="group/btn relative w-full mb-4 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium border border-phthalo-700/50 bg-phthalo-900/20 text-phthalo-100 hover:bg-phthalo-800/40 hover:border-phthalo-500/70 transition-colors"
-                      >
-                        <Eye className="h-4 w-4" />
-                        View Full Case Study
-                        <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-                      </button>
-                    }
-                  />
+                  <>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setModalOpen(true);
+                      }}
+                      className="group/btn relative w-full mb-4 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium border border-phthalo-700/50 bg-phthalo-900/20 text-phthalo-100 hover:bg-phthalo-800/40 hover:border-phthalo-500/70 transition-colors"
+                    >
+                      <Eye className="h-4 w-4" />
+                      View Full Case Study
+                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                    </button>
+                    <ProjectDetailsModal
+                      open={modalOpen}
+                      onOpenChange={handleOpenChange}
+                      title={title}
+                      description={description}
+                      tags={tags}
+                      image={image}
+                      demoUrl={demoUrl}
+                      repoUrl={repoUrl}
+                      isConfidential={isConfidential}
+                      confidentialNote={confidentialNote}
+                      details={details}
+                    />
+                  </>
                 )}
               </div>
             </div>
 
-            <div className="flex justify-between items-center gap-3 mt-auto pt-4 border-t border-zinc-700/50">
+            <div
+              className="flex justify-between items-center gap-3 mt-auto pt-4 border-t border-zinc-700/50"
+              onClick={stopPropagation}
+            >
               {isConfidential ? (
                 <div className="flex items-center gap-2 text-xs text-zinc-500">
                   <Lock className="h-3.5 w-3.5 text-phthalo-400" />
