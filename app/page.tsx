@@ -31,10 +31,12 @@ import { Marquee } from "@/components/magicui/marquee";
 import { CertificatesSection } from "@/components/certificates-section";
 import SocialLinks from "@/components/SocailLinks";
 import { AnimatedNumber } from "@/components/animated-number";
+import { Ambient } from "@/components/ambient";
+import { RevealGroup, RevealItem } from "@/components/reveal";
 
 export default function Portfolio() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-zinc-900 to-black text-white overflow-hidden">
+    <div className="min-h-screen overflow-hidden bg-gradient-to-b from-zinc-900 via-zinc-900 to-black text-white">
       <MouseFollower />
       <SmoothHashScroll />
       <ScrollProgress />
@@ -42,11 +44,7 @@ export default function Portfolio() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 sm:pt-24">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-phthalo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-          <div className="absolute top-40 right-10 w-72 h-72 bg-phthalo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-phthalo-700 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-        </div>
+        <Ambient intensity="hero" />
 
         <div className="container relative z-10 px-4 sm:px-6">
           {/* Mobile Layout */}
@@ -64,14 +62,18 @@ export default function Portfolio() {
               <CreativeHero />
             </div>
 
-            {/* 3. Software engineer badge */}
-            <div className="flex justify-center">
-              <div className="relative px-3 py-1 text-xs font-medium rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
-                <span className="relative z-10">
-                  Full Stack Engineer | MERN | Cloud & API Integrations
+            {/* 3. Role badge — split into separate chips on mobile. As one
+                pill the full string wrapped to two cramped lines inside a
+                rounded-full container, which reads as broken. */}
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {["Full Stack Engineer", "MERN", "Cloud & API"].map((label) => (
+                <span
+                  key={label}
+                  className="relative rounded-full border border-white/15 bg-white/[0.07] px-3 py-1.5 text-[11px] font-medium leading-none text-zinc-200 backdrop-blur-sm"
+                >
+                  {label}
                 </span>
-                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-phthalo-500/20 to-phthalo-700/20 animate-pulse"></span>
-              </div>
+              ))}
             </div>
 
             {/* 4. Description */}
@@ -84,7 +86,7 @@ export default function Portfolio() {
             {/* 5. Buttons */}
             <div className="flex flex-wrap gap-4 pt-4 justify-center">
               <Link href="#projects">
-                <Button className="relative overflow-hidden group bg-gradient-to-r from-phthalo-600 to-phthalo-800 border-0">
+                <Button className="relative overflow-hidden group bg-gradient-to-r from-phthalo-600 to-phthalo-800 border-0 text-white">
                   <span className="relative z-10 flex items-center">
                     View Projects{" "}
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -170,7 +172,7 @@ export default function Portfolio() {
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <Link href="#projects">
-                  <Button className="relative overflow-hidden group bg-gradient-to-r from-phthalo-600 to-phthalo-800 border-0">
+                  <Button className="relative overflow-hidden group bg-gradient-to-r from-phthalo-600 to-phthalo-800 border-0 text-white">
                     <span className="relative z-10 flex items-center">
                       View Projects{" "}
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -234,19 +236,26 @@ export default function Portfolio() {
           </div>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden lg:block">
-          <div className="w-6 h-10 rounded-full border-2 border-white/20 flex justify-center items-start p-1">
-            <div className="w-1.5 h-1.5 rounded-full bg-white/60 animate-pulse"></div>
-          </div>
+        {/* Scroll hint: the rule travels down, fades out, re-enters from the
+            top. Kept to lg+ — the stacked mobile hero has no spare room at the
+            bottom for it. */}
+        <div className="absolute bottom-9 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-[11px] tracking-[0.12em] text-zinc-500 lg:flex">
+          <span>SCROLL</span>
+          {/* Three rules of differing length on offset delays — they read as
+              one falling motion with depth, rather than a single repeating
+              tick. Heights and delays are deliberately not multiples of each
+              other, so the group never resynchronises into a visible pattern. */}
+          <span className="flex h-10 items-start justify-center gap-[5px]">
+            <span className="h-5 w-px animate-scroll-move bg-gradient-to-b from-phthalo-400/60 to-transparent [animation-delay:-1.6s]" />
+            <span className="h-9 w-px animate-scroll-move bg-gradient-to-b from-phthalo-400 to-transparent" />
+            <span className="h-3 w-px animate-scroll-move bg-gradient-to-b from-phthalo-400/45 to-transparent [animation-delay:-0.8s]" />
+          </span>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-32 relative">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-phthalo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/3 left-1/3 w-64 h-64 bg-phthalo-700 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-        </div>
+      <section id="about" className="relative py-20 md:py-28">
+        <Ambient variant={0} />
 
         <div className="container relative z-10">
           <SectionHeading
@@ -255,7 +264,7 @@ export default function Portfolio() {
           />
 
           {/* Stat tiles */}
-          <div className="grid grid-cols-2 lg:grid-cols-3 max-md:grid-cols-1 gap-4 mt-16">
+          <RevealGroup className="grid grid-cols-2 lg:grid-cols-3 max-md:grid-cols-1 gap-4 mt-16">
             {[
               { value: "20+", label: "Projects Shipped", Icon: Briefcase },
               // { value: "10+", label: "ML Models Deployed", Icon: Brain },
@@ -266,20 +275,22 @@ export default function Portfolio() {
               },
               { value: "3", label: "Core Domains", Icon: Target },
             ].map(({ value, label, Icon }) => (
-              <div key={label} className="relative group ">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-phthalo-500/30 to-phthalo-700/30 rounded-xl blur opacity-40 group-hover:opacity-90 transition duration-300" />
-                <div className="relative h-full bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 rounded-xl p-5 group-hover:border-phthalo-700/50 transition">
-                  <Icon className="h-5 w-5 text-phthalo-400 mb-3" />
-                  <div className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-phthalo-300 via-phthalo-500 to-phthalo-700">
+              <RevealItem key={label} className="group relative">
+                <div className="relative h-full overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5 backdrop-blur-sm transition-colors duration-200 ease-out group-hover:border-phthalo-500/40 group-hover:bg-white/[0.04]">
+                  {/* Corner light — cheaper than a blurred pseudo-element and
+                      reads as the card catching the section's ambient glow. */}
+                  <span className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-phthalo-500/20 blur-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <Icon className="mb-3 h-5 w-5 text-phthalo-400" />
+                  <div className="text-2xl font-bold text-white md:text-3xl">
                     <AnimatedNumber value={value} />
                   </div>
-                  <div className="text-xs md:text-sm text-zinc-400 mt-1.5">
+                  <div className="mt-1.5 text-xs text-zinc-400 md:text-sm">
                     {label}
                   </div>
                 </div>
-              </div>
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
 
           {/* Main 2-col area: code card + identity */}
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mt-8">
@@ -561,11 +572,8 @@ export default function Portfolio() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-32 relative">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-phthalo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-phthalo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-        </div>
+      <section id="skills" className="relative py-20 md:py-28">
+        <Ambient variant={1} />
 
         <div className="container relative z-10">
           <SectionHeading
@@ -577,48 +585,48 @@ export default function Portfolio() {
           <div className="hidden md:block mt-16">
             <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
               <Marquee pauseOnHover className="[--duration:40s]">
-                <SkillBadge name="TypeScript" level={95} />
-                <SkillBadge name="Python" level={90} />
-                <SkillBadge name="TailwindCSS" level={95} />
-                <SkillBadge name="React.js" level={95} />
-                <SkillBadge name="Next.js" level={90} />
-                <SkillBadge name="Node.js" level={90} />
-                <SkillBadge name="NestJS" level={70} />
-                <SkillBadge name="Express.js" level={95} />
-                <SkillBadge name="NestJS" level={90} />
-                <SkillBadge name="NGINX" level={60} />
-                <SkillBadge name="MonoRepo" level={80} />
-                <SkillBadge name="TurboRepo" level={80} />
-                <SkillBadge name="Tenstack-Router" level={80} />
-                <SkillBadge name="Tenstack-Query" level={85} />
-                <SkillBadge name="Prisma" level={80} />
-                <SkillBadge name="Drizzle" level={80} />
-                <SkillBadge name="TypeORM" level={75} />
-                <SkillBadge name="PostgreSQL" level={90} />
-                <SkillBadge name="Pandas" level={60} />
-                <SkillBadge name="MySQL" level={90} />
-                <SkillBadge name="MongoDB" level={95} />
-                <SkillBadge name="Redis" level={70} />
-                <SkillBadge name="Docker" level={80} />
+                <SkillBadge name="TypeScript" />
+                <SkillBadge name="Python" />
+                <SkillBadge name="TailwindCSS" />
+                <SkillBadge name="React.js" />
+                <SkillBadge name="Next.js" />
+                <SkillBadge name="Node.js" />
+                <SkillBadge name="NestJS" />
+                <SkillBadge name="Express.js" />
+                <SkillBadge name="NestJS" />
+                <SkillBadge name="NGINX" />
+                <SkillBadge name="MonoRepo" />
+                <SkillBadge name="TurboRepo" />
+                <SkillBadge name="Tenstack-Router" />
+                <SkillBadge name="Tenstack-Query" />
+                <SkillBadge name="Prisma" />
+                <SkillBadge name="Drizzle" />
+                <SkillBadge name="TypeORM" />
+                <SkillBadge name="PostgreSQL" />
+                <SkillBadge name="Pandas" />
+                <SkillBadge name="MySQL" />
+                <SkillBadge name="MongoDB" />
+                <SkillBadge name="Redis" />
+                <SkillBadge name="Docker" />
               </Marquee>
               <Marquee reverse pauseOnHover className="[--duration:40s]">
-                <SkillBadge name="Axios" level={75} />
-                <SkillBadge name="WebSockets" level={90} />
-                <SkillBadge name="Swagger" level={75} />
-                <SkillBadge name="AWS" level={65} />
-                <SkillBadge name="Supabase" level={95} />
-                <SkillBadge name="Stripe" level={60} />
-                <SkillBadge name="Git" level={95} />
-                <SkillBadge name="MJML" level={80} />
-                <SkillBadge name="Swiper.js" level={90} />
-                <SkillBadge name="Splide.js" level={95} />
-                <SkillBadge name="CI/CD" level={60} />
-                <SkillBadge name="Husky" level={80} />
-                <SkillBadge name="Postman" level={80} />
-                <SkillBadge name="Beekeeper Studio" level={80} />
+                <SkillBadge name="Axios" />
+                <SkillBadge name="WebSockets" />
+                <SkillBadge name="Swagger" />
+                <SkillBadge name="AWS" />
+                <SkillBadge name="Supabase" />
+                <SkillBadge name="Stripe" />
+                <SkillBadge name="Git" />
+                <SkillBadge name="MJML" />
+                <SkillBadge name="Swiper.js" />
+                <SkillBadge name="Splide.js" />
+                <SkillBadge name="CI/CD" />
+                <SkillBadge name="Husky" />
+                <SkillBadge name="Postman" />
+                <SkillBadge name="Beekeeper Studio" />
               </Marquee>
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-zinc-900"></div>
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-zinc-900"></div>
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-zinc-900 to-transparent"></div>
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-zinc-900 to-transparent"></div>
             </div>
           </div>
 
@@ -626,26 +634,26 @@ export default function Portfolio() {
           <div className="md:hidden mt-16">
             <div className="relative flex h-[500px] w-full flex-row items-center justify-center overflow-hidden">
               <Marquee pauseOnHover vertical className="[--duration:40s]">
-                <SkillBadge name="TypeScript" level={95} />
-                <SkillBadge name="Python" level={90} />
-                <SkillBadge name="TailwindCSS" level={95} />
-                <SkillBadge name="React.js" level={95} />
-                <SkillBadge name="Next.js" level={90} />
-                <SkillBadge name="Node.js" level={90} />
-                <SkillBadge name="NestJS" level={70} />
-                <SkillBadge name="Express.js" level={95} />
-                <SkillBadge name="NestJS" level={90} />
-                <SkillBadge name="Tenstack-Router" level={80} />
-                <SkillBadge name="Tenstack-Query" level={85} />
-                <SkillBadge name="Prisma" level={80} />
-                <SkillBadge name="Drizzle" level={80} />
-                <SkillBadge name="TypeORM" level={75} />
-                <SkillBadge name="PostgreSQL" level={90} />
-                <SkillBadge name="Pandas" level={60} />
-                <SkillBadge name="MySQL" level={90} />
-                <SkillBadge name="MongoDB" level={95} />
-                <SkillBadge name="Redis" level={70} />
-                <SkillBadge name="Docker" level={80} />
+                <SkillBadge name="TypeScript" />
+                <SkillBadge name="Python" />
+                <SkillBadge name="TailwindCSS" />
+                <SkillBadge name="React.js" />
+                <SkillBadge name="Next.js" />
+                <SkillBadge name="Node.js" />
+                <SkillBadge name="NestJS" />
+                <SkillBadge name="Express.js" />
+                <SkillBadge name="NestJS" />
+                <SkillBadge name="Tenstack-Router" />
+                <SkillBadge name="Tenstack-Query" />
+                <SkillBadge name="Prisma" />
+                <SkillBadge name="Drizzle" />
+                <SkillBadge name="TypeORM" />
+                <SkillBadge name="PostgreSQL" />
+                <SkillBadge name="Pandas" />
+                <SkillBadge name="MySQL" />
+                <SkillBadge name="MongoDB" />
+                <SkillBadge name="Redis" />
+                <SkillBadge name="Docker" />
               </Marquee>
               <Marquee
                 reverse
@@ -653,34 +661,31 @@ export default function Portfolio() {
                 vertical
                 className="[--duration:40s]"
               >
-                <SkillBadge name="WebSockets" level={90} />
-                <SkillBadge name="Axios" level={75} />
-                <SkillBadge name="Swagger" level={75} />
-                <SkillBadge name="AWS" level={65} />
-                <SkillBadge name="Supabase" level={95} />
-                <SkillBadge name="Stripe" level={60} />
-                <SkillBadge name="Git" level={95} />
-                <SkillBadge name="MJML" level={80} />
-                <SkillBadge name="Swiper.js" level={90} />
-                <SkillBadge name="Splide.js" level={95} />
-                <SkillBadge name="CI/CD" level={60} />
-                <SkillBadge name="Husky" level={80} />
-                <SkillBadge name="Postman" level={80} />
-                <SkillBadge name="Beekeeper Studio" level={80} />
+                <SkillBadge name="WebSockets" />
+                <SkillBadge name="Axios" />
+                <SkillBadge name="Swagger" />
+                <SkillBadge name="AWS" />
+                <SkillBadge name="Supabase" />
+                <SkillBadge name="Stripe" />
+                <SkillBadge name="Git" />
+                <SkillBadge name="MJML" />
+                <SkillBadge name="Swiper.js" />
+                <SkillBadge name="Splide.js" />
+                <SkillBadge name="CI/CD" />
+                <SkillBadge name="Husky" />
+                <SkillBadge name="Postman" />
+                <SkillBadge name="Beekeeper Studio" />
               </Marquee>
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-zinc-900"></div>
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-zinc-900"></div>
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-zinc-900 to-transparent"></div>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-zinc-900 to-transparent"></div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-32 relative">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/3 w-64 h-64 bg-phthalo-700 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-        </div>
+      <section id="projects" className="relative py-20 md:py-28">
+        <Ambient variant={2} />
 
         <div className="container relative z-10">
           <SectionHeading
@@ -688,7 +693,7 @@ export default function Portfolio() {
             subtitle="Some of my recent work"
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+          <RevealGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
 
             <ProjectCard
               title="OlloHR — Enterprise HR Management Platform"
@@ -974,7 +979,7 @@ export default function Portfolio() {
                 "Zod",
                 "Prettier",
               ]}
-              image="/vault.png"
+              image="/vault.webp"
               repoUrl="https://github.com/MirzaDanish786/vault-backend"
               isDemoShow={false}
               details={{
@@ -1044,7 +1049,7 @@ export default function Portfolio() {
               title="Kicks E-Commerce Frontend"
               description="A responsive, component-driven e-commerce storefront with paginated product browsing, interactive sliders, and a polished, performance-conscious UI."
               tags={["React.js", "TailwindCSS", "Swiper"]}
-              image="/kicks-ecommerce.png?height=400&width=600"
+              image="/kicks-ecommerce.webp"
               repoUrl="https://github.com/MirzaDanish786/Ecommerce-frontend-ReactJS"
               demoUrl="https://kicks-e-commerce-frontend.vercel.app/"
               details={{
@@ -1071,7 +1076,7 @@ export default function Portfolio() {
               title="Jadoo Travel"
               description="A high-performance travel landing page focused on motion design, narrative scroll, and a premium brand feel — built with React and Framer Motion."
               tags={["React.js", "TailwindCSS", "FramerMotion", "Splide.js"]}
-              image="/travel-site.png"
+              image="/travel-site.webp"
               repoUrl="https://github.com/MirzaDanish786/travel-webapp"
               demoUrl="https://travel-webapp-chi.vercel.app/"
               details={{
@@ -1100,7 +1105,7 @@ export default function Portfolio() {
               title="Solana Network UI"
               description="A high-fidelity dashboard translating Solana network metrics into a real-time, animation-rich data experience built from scratch with vanilla web fundamentals."
               tags={["HTML 5", "CSS 3", "JavaScript", "DOM"]}
-              image="/solana.png"
+              image="/solana.webp"
               repoUrl="https://github.com/MirzaDanish786/Intern_Task-3-Solana-Project-"
               demoUrl="https://intern-task-3-solana-project.vercel.app/"
               details={{
@@ -1124,12 +1129,12 @@ export default function Portfolio() {
                 ],
               }}
             />
-          </div>
+          </RevealGroup>
         </div>
       </section>
 
       {/* Knowledge Brain Section */}
-      {/* <section className="py-32 relative">
+      {/* <section className="relative py-20 md:py-28">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-phthalo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
           <div className="absolute bottom-1/3 left-1/3 w-64 h-64 bg-phthalo-700 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
@@ -1141,11 +1146,8 @@ export default function Portfolio() {
       </section> */}
 
       {/* Experience Section */}
-      <section id="experience" className="py-32 relative">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-phthalo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-phthalo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-        </div>
+      <section id="experience" className="relative py-20 md:py-28">
+        <Ambient variant={3} />
 
         <div className="container relative z-10">
           <SectionHeading
@@ -1163,11 +1165,8 @@ export default function Portfolio() {
       <CertificatesSection />
 
       {/* Contact Section */}
-      <section id="contact" className="py-32 relative">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-phthalo-700 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/3 right-1/3 w-64 h-64 bg-phthalo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-        </div>
+      <section id="contact" className="relative py-20 md:py-28">
+        <Ambient variant={4} />
 
         <div className="container relative z-10">
           <SectionHeading title="Get In Touch" subtitle="Let's work together" />

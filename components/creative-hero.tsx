@@ -112,9 +112,17 @@ export function CreativeHero() {
               boxShadow: `0 0 ${30 + glowIntensity * 15}px rgba(138, 79, 1, ${0.3 + glowIntensity * 0.1})`
             }}
           >
+            {/* Above the fold and almost certainly the LCP element: eager with
+                high priority, and explicit dimensions so it reserves its box
+                and can't shift the hero as it decodes. */}
             <img
-              src="/dani.png"
-              alt="dani's-image"
+              src="/dani.webp"
+              alt="Portrait of Mirza Danish"
+              width={800}
+              height={800}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
             />
 

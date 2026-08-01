@@ -116,7 +116,7 @@ export function ContactForm() {
             </div>
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-phthalo-600 to-phthalo-800 hover:from-phthalo-700 hover:to-phthalo-900 border-0"
+              className="w-full bg-gradient-to-r from-phthalo-600 to-phthalo-800 hover:from-phthalo-700 hover:to-phthalo-900 border-0 text-white"
               disabled={isSubmitting}
             >
               {isSubmitting ? (

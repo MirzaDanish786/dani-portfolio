@@ -12,6 +12,7 @@ import {
   ProjectDetailsModal,
   type ProjectDetails,
 } from "@/components/project-details-modal";
+import { riseIn } from "@/lib/motion";
 
 interface ProjectCardProps {
   title: string;
@@ -67,13 +68,10 @@ export function ProjectCard({
   const stopPropagation = (e: React.SyntheticEvent) => e.stopPropagation();
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      className="group"
-    >
+    // No initial/whileInView here: the card inherits `hidden`/`visible` from
+    // the enclosing <RevealGroup>, so the grid cascades on one timeline rather
+    // than every card running its own observer and popping independently.
+    <motion.div variants={riseIn} className="group h-full">
       <div
         className={`relative h-full overflow-hidden rounded-xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 transition-all duration-300 group-hover:border-phthalo-500/50 ${
           canOpenDetails ? "cursor-pointer" : ""
@@ -137,6 +135,8 @@ export function ProjectCard({
                 <img
                   src={image || "/placeholder.svg"}
                   alt={title}
+                  loading="lazy"
+                  decoding="async"
                   className={`w-full h-full object-cover transition-transform duration-700 ${isHovered ? "scale-105" : "scale-100"}`}
                 />
               </>
@@ -243,7 +243,7 @@ export function ProjectCard({
                 {demoUrl && isDemoShow ? (
                   <Button
                     size="sm"
-                    className="bg-gradient-to-r from-phthalo-600 to-phthalo-800 hover:from-phthalo-700 hover:to-phthalo-900 border-0"
+                    className="bg-gradient-to-r from-phthalo-600 to-phthalo-800 hover:from-phthalo-700 hover:to-phthalo-900 border-0 text-white"
                     asChild
                   >
                     <Link

@@ -1,26 +1,31 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import type { ReactNode } from "react"
+import { motion } from "framer-motion";
+import type { ReactNode } from "react";
+
+import { Surface } from "@/components/surface";
+import { DURATION, EASE_OUT, VIEWPORT, riseIn } from "@/lib/motion";
 
 interface GlassmorphicCardProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
+// Variants are not branched on useReducedMotion — that hook disagrees between
+// the server and client render and breaks hydration. See components/reveal.tsx.
 export function GlassmorphicCard({ children }: GlassmorphicCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      whileHover={{ y: -5 }}
+      className="group h-full"
+      variants={riseIn}
+      initial="hidden"
+      whileInView="visible"
+      viewport={VIEWPORT}
+      whileHover={{ y: -4 }}
+      transition={{ duration: DURATION.fast, ease: EASE_OUT }}
     >
-      <div className="relative overflow-hidden rounded-xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 p-6 transition-all duration-300 hover:border-phthalo-500/50">
-        <div className="absolute -inset-1 bg-gradient-to-r from-phthalo-500/10 to-phthalo-700/10 rounded-xl blur opacity-25 hover:opacity-100 transition duration-1000 hover:duration-200"></div>
-
-        <div className="relative">{children}</div>
-      </div>
+      <Surface variant="base" interactive glow className="h-full">
+        {children}
+      </Surface>
     </motion.div>
-  )
+  );
 }

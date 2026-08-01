@@ -1,7 +1,25 @@
 import type { Metadata } from "next";
+import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import Script from "next/script";
+
+// Self-hosted at build time by next/font — no render-blocking request to
+// Google, and no layout shift thanks to the generated size-adjust fallback.
+// Weights are pinned to only what the design uses, to keep the payload small.
+const sora = Sora({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["600", "700"],
+  variable: "--font-display",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600"],
+  variable: "--font-sans",
+});
 
 const siteUrl = "https://mirza-danish.pages.dev";
 const siteTitle = "Mirza Danish - Full Stack Engineer";
@@ -41,8 +59,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // NOTE: intentionally no `dark` class on <html>. The site hardcodes its own
+  // zinc/phthalo palette, so the shadcn dark tokens buy nothing here — and
+  // enabling them flips --primary-foreground to near-black, which silently
+  // turns the text on every gradient <Button> dark.
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${sora.variable} ${inter.variable}`}
+      suppressHydrationWarning
+    >
       {process.env.NODE_ENV === "production" && (
         <Script
           defer

@@ -1,40 +1,26 @@
-"use client"
-
-import { motion } from "framer-motion"
-
 interface SkillBadgeProps {
-  name: string
-  level: number
+  name: string;
 }
 
-export function SkillBadge({ name, level }: SkillBadgeProps) {
+/**
+ * A single technology chip.
+ *
+ * These render inside a <Marquee>, so there is deliberately no scroll-reveal
+ * animation here — the element is cloned and translated continuously, which
+ * makes viewport-triggered motion both meaningless and expensive. Hover is the
+ * only state change.
+ *
+ * The old version showed a "level" percentage bar. Self-assessed proficiency
+ * numbers carry no information a reader can act on and invite scepticism, so
+ * the chip now just names the technology.
+ */
+export function SkillBadge({ name }: SkillBadgeProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3 }}
-      viewport={{ once: true }}
-      whileHover={{ y: -5 }}
-    >
-      <div className="relative overflow-hidden rounded-xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 p-6 h-full transition-all duration-300 hover:border-phthalo-500/50">
-        <div className="absolute -inset-1 bg-gradient-to-r from-phthalo-500/10 to-phthalo-700/10 rounded-xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-
-        <div className="relative">
-          <div className="text-center mb-4 font-medium text-lg">{name}</div>
-
-          <div className="relative h-2.5 w-full bg-zinc-700 rounded-full overflow-hidden">
-            <motion.div
-              className="absolute top-0 left-0 h-full bg-gradient-to-r from-phthalo-600 to-phthalo-800 rounded-full"
-              initial={{ width: 0 }}
-              whileInView={{ width: `${level}%` }}
-              transition={{ duration: 1, delay: 0.2 }}
-              viewport={{ once: true }}
-            />
-          </div>
-
-          <div className="mt-2 text-right text-sm text-zinc-400">{level}%</div>
-        </div>
-      </div>
-    </motion.div>
-  )
+    <div className="group mx-1.5 my-1.5 flex items-center gap-2.5 rounded-full border border-white/[0.07] bg-white/[0.03] py-2.5 pl-3 pr-4 backdrop-blur-sm transition-colors duration-200 ease-out hover:border-phthalo-500/40 hover:bg-white/[0.06]">
+      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-phthalo-500/70 transition-colors duration-200 group-hover:bg-phthalo-400" />
+      <span className="whitespace-nowrap text-sm font-medium text-zinc-300 transition-colors duration-200 group-hover:text-white">
+        {name}
+      </span>
+    </div>
+  );
 }

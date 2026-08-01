@@ -97,7 +97,7 @@ export function ECGProjectCard({
                 <DialogTrigger asChild>
                   <Button
                     size="sm"
-                    className="bg-gradient-to-r from-phthalo-600 to-phthalo-800 hover:from-phthalo-700 hover:to-phthalo-900 border-0"
+                    className="bg-gradient-to-r from-phthalo-600 to-phthalo-800 hover:from-phthalo-700 hover:to-phthalo-900 border-0 text-white"
                   >
                     Support
                     <HeadphonesIcon className="ml-2 h-4 w-4" />

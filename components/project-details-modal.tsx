@@ -210,7 +210,7 @@ export function ProjectDetailsModal({
                 {demoUrl && (
                   <Button
                     size="sm"
-                    className="w-full sm:w-auto bg-gradient-to-r from-phthalo-600 to-phthalo-800 hover:from-phthalo-700 hover:to-phthalo-900 border-0"
+                    className="w-full sm:w-auto bg-gradient-to-r from-phthalo-600 to-phthalo-800 hover:from-phthalo-700 hover:to-phthalo-900 border-0 text-white"
                     asChild
                   >
                     <Link

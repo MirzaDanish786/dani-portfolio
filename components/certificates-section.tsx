@@ -48,7 +48,7 @@ const certificates: Certificate[] = [
       "PostgreSQL",
       "MongoDB",
     ],
-    image: "/virtue-netz-certificate.jpeg",
+    image: "/virtue-netz-certificate.webp",
     credentialUrl: "#",
   },
   {
@@ -58,7 +58,7 @@ const certificates: Certificate[] = [
     description:
       "Completed Google’s “Data, Data Everywhere” course on Coursera, gaining hands-on experience in data cleaning, analysis, and working with Python and Pandas.",
     skills: ["Python", "Pandas", "Data", "SQL"],
-    image: "/google-data-analytics-certificate.png",
+    image: "/google-data-analytics-certificate.webp",
     credentialUrl: "https://www.coursera.org/account/accomplishments/verify/3PZXA03IAP6Y",
   },
 ];
@@ -127,6 +127,8 @@ function CertificateCard({
               <img
                 src={image}
                 alt={title}
+                loading="lazy"
+                decoding="async"
                 className="relative w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
               />
             ) : (
@@ -237,6 +239,8 @@ function CertificateCard({
               <img
                 src={image}
                 alt={title}
+                loading="lazy"
+                decoding="async"
                 className="max-w-full max-h-[55vh] sm:max-h-[65vh] md:max-h-[70vh] w-auto h-auto object-contain rounded-md shadow-2xl shadow-phthalo-900/40"
               />
             ) : (
