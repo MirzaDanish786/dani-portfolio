@@ -598,7 +598,7 @@ export default function Portfolio() {
                   "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
               }}
             >
-              <Marquee pauseOnHover className="[--duration:40s]">
+              <Marquee className="[--duration:40s]">
                 <SkillBadge name="TypeScript" />
                 <SkillBadge name="Python" />
                 <SkillBadge name="TailwindCSS" />
@@ -623,7 +623,7 @@ export default function Portfolio() {
                 <SkillBadge name="Redis" />
                 <SkillBadge name="Docker" />
               </Marquee>
-              <Marquee reverse pauseOnHover className="[--duration:40s]">
+              <Marquee reverse className="[--duration:40s]">
                 <SkillBadge name="Axios" />
                 <SkillBadge name="WebSockets" />
                 <SkillBadge name="Swagger" />
@@ -653,7 +653,7 @@ export default function Portfolio() {
                   "linear-gradient(to bottom, transparent, black 14%, black 86%, transparent)",
               }}
             >
-              <Marquee pauseOnHover vertical className="[--duration:40s]">
+              <Marquee vertical className="[--duration:40s]">
                 <SkillBadge name="TypeScript" />
                 <SkillBadge name="Python" />
                 <SkillBadge name="TailwindCSS" />
@@ -675,12 +675,7 @@ export default function Portfolio() {
                 <SkillBadge name="Redis" />
                 <SkillBadge name="Docker" />
               </Marquee>
-              <Marquee
-                reverse
-                pauseOnHover
-                vertical
-                className="[--duration:40s]"
-              >
+              <Marquee reverse vertical className="[--duration:40s]">
                 <SkillBadge name="WebSockets" />
                 <SkillBadge name="Axios" />
                 <SkillBadge name="Swagger" />
