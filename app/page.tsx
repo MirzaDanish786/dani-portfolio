@@ -76,9 +76,9 @@ export default function Portfolio() {
 
             {/* 4. Description */}
             <p className="text-lg text-zinc-400 max-w-[600px]">
-              I blend advanced mathematics, artificial intelligence, machine
-              learning, and full-stack engineering to turn complex ideas into
-              real-world tools.
+              I design and develop full-stack web applications, integrating
+              modern frontend experiences with robust backend systems, cloud
+              deployment, and third-party APIs to solve real-world problems.
             </p>
 
             {/* 5. Buttons */}

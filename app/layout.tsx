@@ -23,7 +23,7 @@ export const metadata: Metadata = {
       {
         url: "/og-preview.png",
         width: 1366,
-        height: 630,
+        height: 679,
         alt: "Mirza Danish - Full Stack Engineer",
       },
     ],

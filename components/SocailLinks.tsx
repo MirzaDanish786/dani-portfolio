@@ -85,9 +85,9 @@ function PrimaryLink({ link, index = 0 }: { link: SocialLink; index?: number }) 
       <span className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-phthalo-500/10 via-phthalo-600/10 to-phthalo-800/10 transition-opacity duration-500" />
 
       <span className="relative flex items-center gap-4 min-w-0">
-        <span className="relative flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-phthalo-500/20 to-phthalo-700/20 border border-phthalo-700/40 transition-transform duration-300 group-hover:scale-105">
+        <span className="relative flex shrink-0 items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-phthalo-500/20 to-phthalo-700/20 border border-phthalo-700/40 transition-transform duration-300 group-hover:scale-105">
           <span className="absolute inset-0 rounded-lg bg-phthalo-500/20 blur-md opacity-50 group-hover:opacity-90 transition-opacity duration-500" />
-          <Icon className="relative w-6 h-6 text-phthalo-300 group-hover:text-phthalo-200 transition-colors duration-300" />
+          <Icon className="relative w-6 h-6 shrink-0 text-phthalo-300 group-hover:text-phthalo-200 transition-colors duration-300" />
         </span>
         <span className="flex flex-col min-w-0">
           <span className="text-base font-semibold text-zinc-100 group-hover:text-white transition-colors leading-tight">
@@ -99,10 +99,14 @@ function PrimaryLink({ link, index = 0 }: { link: SocialLink; index?: number }) 
         </span>
       </span>
 
-      <span className="relative flex items-center gap-1.5 text-xs uppercase tracking-wider text-phthalo-400/0 group-hover:text-phthalo-300 transition-all duration-300">
+      {/* Hover affordance: desktop only — on touch it never reveals, and the
+          transparent label would still steal width from the icon. */}
+      <span className="relative ml-auto hidden shrink-0 items-center gap-1.5 text-xs uppercase tracking-wider text-phthalo-400/0 group-hover:text-phthalo-300 transition-all duration-300 sm:flex">
         Visit
         <ExternalLink className="w-4 h-4 -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
       </span>
+
+      <ExternalLink className="relative ml-auto h-4 w-4 shrink-0 text-zinc-600 sm:hidden" />
 
       {/* Shimmer sweep on hover */}
       <span className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
@@ -128,8 +132,8 @@ function SecondaryLink({ link, index }: { link: SocialLink; index: number }) {
     >
       <span className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-phthalo-500/10 to-phthalo-700/10 transition-opacity duration-500" />
 
-      <span className="relative flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-phthalo-500/15 to-phthalo-700/15 border border-phthalo-700/40 transition-transform duration-300 group-hover:scale-105">
-        <Icon className="w-5 h-5 text-phthalo-300 group-hover:text-phthalo-200 transition-colors" />
+      <span className="relative flex shrink-0 items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-phthalo-500/15 to-phthalo-700/15 border border-phthalo-700/40 transition-transform duration-300 group-hover:scale-105">
+        <Icon className="w-5 h-5 shrink-0 text-phthalo-300 group-hover:text-phthalo-200 transition-colors" />
       </span>
 
       <span className="relative flex flex-col min-w-0">
