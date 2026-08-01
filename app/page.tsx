@@ -43,7 +43,9 @@ export default function Portfolio() {
       <FloatingNav />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 sm:pt-24">
+      {/* pb reserves room for the scroll indicator so it can't sit on top of
+          the stacked mobile hero content. */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-28 sm:pt-24 lg:pb-20">
         <Ambient intensity="hero" />
 
         <div className="container relative z-10 px-4 sm:px-6">
@@ -239,7 +241,7 @@ export default function Portfolio() {
         {/* Scroll hint: the rule travels down, fades out, re-enters from the
             top. Kept to lg+ — the stacked mobile hero has no spare room at the
             bottom for it. */}
-        <div className="absolute bottom-9 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-[11px] tracking-[0.12em] text-zinc-500 lg:flex">
+        <div className="absolute bottom-9 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 font-mono text-[11px] tracking-[0.12em] text-zinc-500">
           <span>SCROLL</span>
           {/* Three rules of differing length on offset delays — they read as
               one falling motion with depth, rather than a single repeating
@@ -583,7 +585,19 @@ export default function Portfolio() {
 
           {/* Desktop: Two horizontal rows */}
           <div className="hidden md:block mt-16">
-            <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
+            {/* Masked rather than overlaid with a colour: the section sits on
+                a zinc-900 -> black gradient, so a solid `from-zinc-900` fade
+                paints a band lighter than its own backdrop and shows a hard
+                edge. A mask fades the content itself and is backdrop-agnostic. */}
+            <div
+              className="relative flex w-full flex-col items-center justify-center overflow-hidden"
+              style={{
+                maskImage:
+                  "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+                WebkitMaskImage:
+                  "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+              }}
+            >
               <Marquee pauseOnHover className="[--duration:40s]">
                 <SkillBadge name="TypeScript" />
                 <SkillBadge name="Python" />
@@ -625,14 +639,20 @@ export default function Portfolio() {
                 <SkillBadge name="Postman" />
                 <SkillBadge name="Beekeeper Studio" />
               </Marquee>
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-zinc-900 to-transparent"></div>
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-zinc-900 to-transparent"></div>
             </div>
           </div>
 
           {/* Mobile: Two vertical columns */}
           <div className="md:hidden mt-16">
-            <div className="relative flex h-[500px] w-full flex-row items-center justify-center overflow-hidden">
+            <div
+              className="relative flex h-[500px] w-full flex-row items-center justify-center overflow-hidden"
+              style={{
+                maskImage:
+                  "linear-gradient(to bottom, transparent, black 14%, black 86%, transparent)",
+                WebkitMaskImage:
+                  "linear-gradient(to bottom, transparent, black 14%, black 86%, transparent)",
+              }}
+            >
               <Marquee pauseOnHover vertical className="[--duration:40s]">
                 <SkillBadge name="TypeScript" />
                 <SkillBadge name="Python" />
@@ -676,8 +696,6 @@ export default function Portfolio() {
                 <SkillBadge name="Postman" />
                 <SkillBadge name="Beekeeper Studio" />
               </Marquee>
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-zinc-900 to-transparent"></div>
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-zinc-900 to-transparent"></div>
             </div>
           </div>
         </div>
