@@ -116,7 +116,7 @@ export function CreativeHero() {
                 high priority, and explicit dimensions so it reserves its box
                 and can't shift the hero as it decodes. */}
             <img
-              src="/dani.webp"
+              src="/dani-gradient.webp"
               alt="Portrait of Mirza Danish"
               width={800}
               height={800}
